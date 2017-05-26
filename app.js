@@ -8,6 +8,7 @@ var mongoose=require('mongoose');
 var index = require('./routes/index');
 var users = require('./routes/users');
 var expresshbs=require('express-handlebars');
+var expressValidator=require('express-validator');
 var session=require('express-session');
 var passport=require('passport');
 var flash=require('connect-flash');
@@ -37,6 +38,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(cookieParser());
+app.use(expressValidator());
 app.use(session({secret:'asdfsad',resave:false,saveUninitialized:false}));
 app.use(flash());
 app.use(passport.initialize());

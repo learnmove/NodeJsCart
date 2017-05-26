@@ -17,6 +17,17 @@ passport.use('local.signup',new LocalStrategy({  //建立策略的名字
     passReqToCallback:true //可以有Request參數
 
 },function(req,email,password,done){   //從req.body傳來的
+    req.checkBody('email','不合法的E-mail').notEmpty().isEmail();
+    req.checkBody('password','不合法的密碼').notEmpty().isLength({min:4});
+    var errors=req.validationErrors();
+    if(errors){
+        var message=[];
+        errors.forEach(function(error){
+            message.push(error.msg);
+        })
+        
+        return done(null,false,req.flash('error',message));
+    }
     User.findOne({
         'email':email,
 
@@ -41,6 +52,41 @@ passport.use('local.signup',new LocalStrategy({  //建立策略的名字
             return done(null,result);
         })
     });
+}
+
+));
+passport.use('local.signin',new LocalStrategy({
+    usernameField:'email',
+    passwordField:'password',
+    passReqToCallback:true
+},function(req,email,password,done){
+    console.log(password);
+    req.checkBody('password','不合法的密碼').notEmpty().isLength({min:4});
+    req.checkBody('email','不合法的email').notEmpty().isEmail();
+    var errors=req.validationErrors();
+    var message=[];
+    if(errors){
+        errors.forEach(function(error){
+            message.push(error.msg);
+        });
+        return done(null,false,req.flash('error',message));
+    }
+    User.findOne({'email':email},function(err,user){
+        if(err){
+            return done(err);
+        }
+        if(!user){
+            return done(null,false,{message:'沒有這個email'});
+
+        }
+        if(!user.ValidPassword(password)){
+            return done(null,false,{message:'密碼錯誤'});
+
+        }
+        return done(null,user);
+
+    })
+
 }
 
 ))
