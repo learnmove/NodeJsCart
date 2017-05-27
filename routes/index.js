@@ -7,12 +7,10 @@ router.get('/', function(req, res, next) {
 Product.find({},function(err,products){
   var proChunk=[];
   var chunksize=3;
-  for(var index=0;ndex<products.length;index+=chunksize){
+  for(var index=0;index<products.length;index+=chunksize){
   proChunk.push(products.slice(index,index+chunksize));
-
   }
-  
-  res.render('index', { title: 'Express' ,products:proChunk});
+  res.render('index', { title: 'Express' ,products:proChunk[0]});
 
 });
 });
