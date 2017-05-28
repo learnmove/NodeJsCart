@@ -10,3 +10,11 @@ a {
   max-height: 150px;
 
 }
+.title{
+  margin-bottom:10px; 
+  
+}
+.price{
+  color:red;
+  font-weight:bold;
+}

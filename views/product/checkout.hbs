@@ -1,0 +1,82 @@
+<div class="row">
+    <div class="col-sm-6">
+       
+        <h1>結帳頁面</h1>
+        <h4>總共${{cart.totalPrice}}</h4>
+        <div class="panel panel-default">
+            <div class="panel-heading"><div class="text-center"><h4>購買清單</h4></div> </div>
+            <div class="panel-body">
+                <ul class="list-group">
+                    {{#each cart.items}}
+                    <li class="list-group-item">
+                     <div class="row">
+                         <div class="col-sm-3">數量<div class="">{{this.item.title}}</div> </div>
+                         <div class="col-sm-3">數量<div class="">{{this.qty}}</div> </div>
+                         <div class="col-sm-3">單價<div class="price">{{this.item.price}} </div></div>
+                         <div class="col-sm-3">總價<div class="price">{{this.price}}</div>   </div>
+                     </div>
+                    
+                    </li>
+                    {{/each}}
+                </ul>
+            </div>
+        </div>
+       
+        <form action="/product/checkout" id="checkout-form" method="post" >
+        
+            <div class="row">
+                 <div id="charge-error" class="alert alert-danger hidden ">
+
+                </div>
+                <div class="col-xs-12">
+                    <div class="form-group">
+                        <label for="name">名字</label>
+                        <input type="text"  name="name" class="form-control">
+                    </div>
+                </div>
+                <div class="col-xs-12">
+                    <div class="form-group">
+                        <label for="name">visa卡片名字</label>
+                        <input type="text" name="card-name" id="card-name" class="form-control">
+                    </div>
+                </div>
+                {{!--<div class="col-xs-12">
+                    <div class="form-group">
+                        <label for="name">信用卡號碼</label>
+                        <input type="text" name="card-number" id="card-number" class="form-control">
+                    </div>
+                </div>--}}
+                <div class="col-xs-12">
+                    <div class="form-group">
+                        <label for="name">地址</label>
+                        <input type="text" name="address" id="card-address"class="form-control">
+                    </div>
+                </div>
+                   {{!--<div class="col-xs-6">
+                    <div class="form-group">
+                        <label for="name">月</label>
+                        <input type="text" id="card-exp_month" name="card-expiry-month" class="form-control">
+                    </div>
+                </div>
+                   <div class="col-xs-6">
+                    <div class="form-group">
+                        <label for="name">年</label>
+                        <input type="text" id="card-exp_year" name="card-expiry-year" class="form-control">
+                    </div>
+                </div>--}}
+                    {{!--<div class="col-xs-12">
+                    <div class="form-group">
+                        <label for="name">CVC</label>
+                        <input type="text" name="card-cvc" id="card-cvc" class="form-control">
+                    </div>
+                   
+                </div>--}}
+                <input type="hidden" value="{{cart.totalPrice}}" name="price">
+                 <button class="btn btn-success" id="check" type="submit">結帳</button>
+            </div>
+            <div id="card-element"></div>
+        </form>
+    </div>
+</div>
+<script src="https://js.stripe.com/v3/"></script>
+<script src="/javascripts/checkout.js"></script>

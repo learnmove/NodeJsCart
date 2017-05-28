@@ -17,8 +17,24 @@
              
             </ul>
             <ul class="nav navbar-nav navbar-right">
-              <li class=""><a href="./"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i>
-購物車 </a></li>
+              <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="badge"> {{cart.totalQty}}</span><i class="fa fa-cart-arrow-down" aria-hidden="true"></i>
+購物車 </a>
+<ul class="dropdown-menu">
+  {{#each  cart.items}}
+<li>{{this.item.title}} <span class="badge">{{this.qty}}</span>${{this.price}} 
+<button class="btn btn-danger" onclick="window.location.href='/product/delete/{{this.item._id}}'">刪除</button>
+</li>
+{{/each}}
+
+{{# if cart}}
+  <li><a class="btn btn-default" href="/product/clear">清空購物車</a></li>
+
+<li>共${{cart.totalPrice}}</li>
+<li>數量:{{cart.totalQty}}</li>
+  <li><button class="btn btn-success" onclick="window.location.href='/product/checkout'">結帳購物車</a></li>
+{{/if}}
+</ul>
+</li>
 
 
 {{# if loggin}}

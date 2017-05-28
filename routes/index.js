@@ -10,7 +10,7 @@ Product.find({},function(err,products){
   for(var index=0;index<products.length;index+=chunksize){
   proChunk.push(products.slice(index,index+chunksize));
   }
-  res.render('index', { title: 'Express' ,products:proChunk[0]});
+  res.render('index', { title: 'Express' ,products:proChunk[0],paystatus:req.flash('paystatus')});
 
 });
 });
